@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>預約拍攝表單</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 1.5rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>預約拍攝表單</h2>
+  <form id="bookingForm">
+    <label for="startTime">起始時間</label>
+    <input type="datetime-local" id="startTime" name="startTime" required />
+
+    <label for="endTime">結束時間</label>
+    <input type="datetime-local" id="endTime" name="endTime" required />
+
+    <label for="nickname">暱稱</label>
+    <input type="text" id="nickname" name="nickname" required />
+
+    <label for="location">拍攝地點</label>
+    <input type="text" id="location" name="location" required />
+
+    <label for="people">人數</label>
+    <input type="number" id="people" name="people" required />
+
+    <label for="theme">主題／作品／角色</label>
+    <input type="text" id="theme" name="theme" />
+
+    <label for="style">風格需求或備註<br>(附文字或圖片皆可 EX. 青澀日系 / 暗黑血腥...等)</label>
+    <textarea id="style" name="style" rows="4"></textarea>
+
+    <button type="submit">送出</button>
+  </form>
+
+  <div id="fb-root"></div>
+  <div id="fb-customer-chat" class="fb-customerchat"></div>
+
+  <script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "103770199646788");
+    chatbox.setAttribute("attribution", "biz_inbox");
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('ref')) {
+      chatbox.setAttribute("ref", urlParams.get('ref'));
+    }
+  </script>
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        xfbml: true,
+        version: 'v17.0'
+      });
+    };
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/zh_TW/sdk/xfbml.customerchat.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
+  </script>
+
+  <script>
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      window.location.href = window.location.pathname + '?ref=' + encodeURIComponent('我已經填好單子');
+    });
+  </script>
+</body>
+</html>
